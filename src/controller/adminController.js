@@ -112,7 +112,7 @@ const getCustomersEnquiries = async (req, res) => {
     res.status(200).send({status: true,data:customeerEquiries})
 }
 
-//===============================update customer data=====================================================
+//===============================update customer enquiry =====================================================
 
 
 const updateStatus = async (req, res) => {
@@ -138,7 +138,7 @@ const updateStatus = async (req, res) => {
     }
 }
 
-//==============================DELETE CUSTOMER DATA WHICH ARE RESOLVED=========================================
+//==============================DELETE CUSTOMER enquiry=========================================
 
 const deleteCostumerData = async function (req, res) {
     try {

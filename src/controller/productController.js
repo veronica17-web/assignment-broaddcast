@@ -4,8 +4,7 @@ const productModel = require('../models/productModel')
 const createProduct = async (req, res) => {
     try {
         let productDetails = req.body
-        const { isValid, isValidBody, isValidString, isValidPrice,
-            isValidEmail, isValidPhone, isValidPassword, isValidPincode } = require('../validation/validators')
+        const { isValid, isValidBody,  isValidPrice } = require('../validation/validators')
 
         const { name, price, description } = productDetails
 

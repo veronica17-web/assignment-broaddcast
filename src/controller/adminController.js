@@ -103,7 +103,7 @@ const adminLogin = async (req, res) => {
     }
 }
 
-//====================get the customer enquiry which are not deleted==============================================
+//====================get the customer enquiry ==============================================
 ;
 const getCustomersEnquiries = async (req, res) => {
     const customeerEquiries = await enquiryModel.find()

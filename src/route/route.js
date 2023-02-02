@@ -19,7 +19,7 @@ router.post("/product",createProduct)
 
 router.post("/adminRegister",adminRegister)
 router.post('/adminLogin',adminLogin)
-router.get("/getCustomersEnquiries",getCustomersEnquiries)
+router.get("/getCustomersEnquiries/:adminID",authentication, authorization,getCustomersEnquiries)
 router.put("/updateStatus/:adminID",authentication, authorization,updateStatus)
 router.delete("/deleteCostumerData/:adminID",authentication, authorization,deleteCostumerData)
 module.exports = router

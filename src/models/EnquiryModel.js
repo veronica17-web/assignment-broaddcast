@@ -18,6 +18,7 @@ const EnquirySchema = new mongoose.Schema({
          enum: ["pending", "completed"]
 
     }, 
+
     isDeleted: { 
         type: Boolean, 
         default: false 

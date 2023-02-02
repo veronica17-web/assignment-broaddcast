@@ -17,7 +17,7 @@ const adminRegister = async (req, res) => {
             return res.status(400).send({
                 status: false, message: "Enter details "
             });
-
+            //name validation
         if (!name) return res.status(400).send({
             status: false, message: " name is required"
         });
@@ -26,7 +26,7 @@ const adminRegister = async (req, res) => {
             return res.status(400).send({
                 status: false, message: "name should not be an empty string"
             });
-
+            //email validation
         if (!email) return res.status(400).send({
             status: false, message: "User Email-id is required"
         });
@@ -39,7 +39,7 @@ const adminRegister = async (req, res) => {
         if (duplicateEmail) return res.status(400).send({
             status: false, message: "Email already exist"
         })
-
+        //password validation
         if (!password) return res.status(400).send({
             status: false, message: "Password is required"
         });
@@ -50,7 +50,7 @@ const adminRegister = async (req, res) => {
         });
 
         data.password = await bcrypt.hash(password, 10);
-
+     //make response
         let saveData = await adminModel.create(data)
         res.status(201).send(saveData)
     } catch (error) {
@@ -106,9 +106,10 @@ const adminLogin = async (req, res) => {
 //====================get the customer enquiry ==============================================
 ;
 const getCustomersEnquiries = async (req, res) => {
+
     const customeerEquiries = await enquiryModel.find()
     if (customeerEquiries.length == 0) return res.status(404).send({ status: false, message: "data not found" })
-    res.status(200).send(customeerEquiries)
+    res.status(200).send({status: true,data:customeerEquiries})
 }
 
 //===============================update customer data=====================================================
@@ -126,12 +127,9 @@ const updateStatus = async (req, res) => {
 
         if (!ObjectId.isValid(id)) {
             return res.status(400).send({
-                status: false,
-                message: "Given adminID is an invalid ObjectId",
-            });
+                status: false, message: "Given adminID is an invalid ObjectId"});
         }
-        let updateDoc = await enquiryModel.findOneAndUpdate({ customerID: customerID, isDeleted: false }, 
-            { EnquiryStatus: "resloved" })
+        let updateDoc = await enquiryModel.findOneAndUpdate({ customerID: customerID, isDeleted: false },{ EnquiryStatus: "resloved" })
         if (!updateDoc) return res.status(404).send({ status: false, message: "data not found" })
 
         return res.status(200).send({ status: true, msg: "updated successfully", });

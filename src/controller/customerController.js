@@ -15,9 +15,9 @@ const customerRegister = async function (req, res) {
         if (isValidBody(data)) {
             return res.status(400).send({
                 status: false,msg: "please provide data"})
-        }
+        }//name validation
         if (!name) return res.status(400).send({
-            status: false, message: "First name is required"  });
+            status: false, message: "name is required"  });
 
         if (isValid(name)) {
             return res.status(400).send({
@@ -25,7 +25,7 @@ const customerRegister = async function (req, res) {
         }
         if (isValidString(name)) return res.status(400).send({
             status: false, message: "Enter a valid name and should not contains numbers" });
-
+          // email validation
         if (!email) return res.status(400).send({
             status: false, message: "User Email-id is required" });
 
@@ -35,7 +35,7 @@ const customerRegister = async function (req, res) {
         let duplicateEmail = await customerModel.findOne({ email: email })
         if (duplicateEmail) return res.status(400).send({
             status: false,  message: "Email already exist"   })
-
+        // phone validation
         if (!phone) return res.status(400).send({
             status: false,   message: " Phone number is required" });
 
@@ -45,7 +45,7 @@ const customerRegister = async function (req, res) {
         let duplicatePhone = await customerModel.findOne({ phone: phone })
         if (duplicatePhone) return res.status(400).send({
             status: false,  message: "Phone already exist"})
-
+        //password validation
         if (!password) return res.status(400).send({
             status: false, message: "Password is required" });
 
@@ -54,19 +54,19 @@ const customerRegister = async function (req, res) {
             message: "Password should be between 8 and 15 character and it should be alpha, numeric"});
           
             data.password = await bcrypt.hash(password, 10);
-
+        //state validation
         if (!state) return res.status(400).send({
             status: false, message: "state is required" });
 
         if (isValidString(state)) return res.status(400).send({
             status: false,  message: "Enter a valid  state name and should not contains numbers" });
-
+        // city validation
         if (!city) return res.status(400).send({
             status: false,message: "city is required"});
 
         if (isValidString(city)) return res.status(400).send({
             status: false, message: "Enter a valid  city name and should not contains numbers"});
-
+        // pincode validation
         if (!pincode) return res.status(400).send({
             status: false,message: "pincode is required"});
 
@@ -75,7 +75,7 @@ const customerRegister = async function (req, res) {
                 status: false,message: "Please Provide valid Pincode "})
         };
         
-
+       //  Make Respoense
         let saveData = await customerModel.create(data)
         res.status(201).send(saveData)
     } catch (error) {
@@ -129,22 +129,25 @@ const login = async (req, res) => {
 const Enquiry = async (req,res)=>{
     try {
     let data = req.body
-    const {customerID,Enquiry,EnquiryStatus} = data
+    const {customerID,Enquiry} = data
 
     if (isValidBody(data)) {
         return res.status(400).send({ status: false, message: "Provide some data inside the body " })
     }
+    // customerID validation
     if (!isValid1(customerID)) {
         return res.status(400).send({ status: false, message: "customerID is required" })
     }
     if (!isValidObjectId(customerID)) {
         return res.status(400).send({ status: false, message: " customerID not valid" })
     }
+    //enquiry validation
     if (isValid(Enquiry)) {
         return res.status(400).send({ status: false, message: "Enquiry is required" })
     }
+    //  Make Respoense
     let saveData = await enquiryModel.create(data)
-    res.status(201).send(saveData)
+    res.status(201).send({ status: true, data :saveData})
 } catch (error) {
     return res.status(500).send({ status: false, message: error.message })
 }
